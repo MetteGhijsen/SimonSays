@@ -24,39 +24,39 @@ function GenerateSequence() {
 }
 
 function ShowSequence() {
-}
-    for (let i = 0; i < 10;i++) {
-        switch (0) {
+    for (let i = 0; i < 10; i++) {
+        switch (generatedSequence[i]) {
             case 0: //rood
                 buttonRed.style.opacity = "100%";
-                setTimeout(function (){
+                setTimeout(function () {
                     buttonRed.style.opacity = "";
-                },difficulty);
+                }, difficulty);
                 //playNote(310, 500);
                 break;
             case 1: //geel
                 buttonYellow.style.opacity = "100%";
-                setTimeout(function (){
-                buttonYellow.style.opacity = "";
-                },difficulty);
+                setTimeout(function () {
+                    buttonYellow.style.opacity = "";
+                }, difficulty);
                 //playNote(252, 500);
                 break;
             case 2: //groen
                 buttonGreen.style.opacity = "75%";
-                    setTimeout(function (){
-                buttonGreen.style.opacity = "";
-                    },difficulty);
+                setTimeout(function () {
+                    buttonGreen.style.opacity = "";
+                }, difficulty);
                 //playNote(415, 500);
                 break;
             case 3: //blauw
                 buttonBlue.style.opacity = "100%";
-                        setTimeout(function (){
-                buttonBlue.style.opacity = "";
-                        },difficulty);
+                setTimeout(function () {
+                    buttonBlue.style.opacity = "";
+                }, difficulty);
                 //playNote(209, 500);
                 break;
         }
     }
+}
 
 function Choice(color) {
     for (let i = 0; i < currentLevel; i++) {
