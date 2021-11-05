@@ -1,0 +1,170 @@
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url(montserrat/Montserrat-Regular.otf) format("truetype");
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url(montserrat/Montserrat-Bold.otf) format("truetype");
+}
+
+body{
+    background-color: #3b3b3b;
+    padding: 0;
+}
+
+score{
+    display: flex;
+    justify-content: center;
+}
+
+.score h1{
+    font-family: Montserrat-Bold;
+    display: flex;
+    font-size: 50px;
+    color: white;
+    text-shadow: 5px 5px black;
+}
+
+.score p{
+    font-family: Montserrat-Regular;
+    display: flex;
+    color: white;
+    font-size: 50px;
+    margin-top: -40px;
+    text-shadow: 5px 5px black;
+}
+
+.scoreplayer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2%;
+}
+
+.buttonStart{
+    font-family: Montserrat-Bold;
+    background-color: #666666;
+    color: white;
+    border-radius: 10px;
+    height: 100px;
+    width: 500px;
+    font-size: 50px;
+    transition: all .5s ease;
+    border: none;
+    text-shadow: 5px 5px black;
+    display: flex;
+    justify-content: center;
+}
+
+.buttonStart:hover{
+    background-color: #8c8c8c;
+    box-shadow: 10px 10px black;
+}
+
+.buttonStartArea{
+    display: flex;
+    justify-content: center;
+    margin-top: -90px;
+    margin-bottom: 20px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 300px 300px;
+    grid-template-rows: 300px 300px;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    "areaRed areaYellow"
+    "areaGreen areaBlue";
+}
+
+.areaRed { grid-area: areaRed;}
+
+.areaYellow { grid-area: areaYellow;}
+
+.areaGreen { grid-area: areaGreen;}
+
+.areaBlue { grid-area: areaBlue;}
+
+.areaRed{
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.areaYellow{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.areaGreen{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.areaBlue{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.buttonRed{
+    background: linear-gradient(60deg, #ff0000, #dd0000);
+    border-radius: 20px;
+    border: none;
+    height: 300px;
+    width: 300px;
+    opacity: 40%;
+    transition: 0.2s ease;
+}
+
+.buttonRed:hover{
+    opacity: 100%;
+}
+
+.buttonYellow{
+    background: linear-gradient(60deg, #ffff00, #dddd00);
+    border-radius: 20px;
+    border: none;
+    height: 300px;
+    width: 300px;
+    opacity: 20%;
+    transition: 0.2s ease;
+}
+
+.buttonYellow:hover{
+    opacity: 100%;
+}
+
+.buttonGreen{
+    background: linear-gradient(60deg, #00ff00, #00dd00);
+    border-radius: 20px;
+    border: none;
+    height: 300px;
+    width: 300px;
+    opacity: 20%;
+    transition: 0.2s ease;
+}
+
+.buttonGreen:hover{
+    opacity: 75%;
+}
+
+.buttonBlue{
+    background: linear-gradient(60deg, #0000ff, #0000dd);
+    border-radius: 20px;
+    border: none;
+    height: 300px;
+    width: 300px;
+    opacity: 20%;
+    transition: 0.2s ease;
+}
+
+.buttonBlue:hover{
+    opacity: 100%;
+}
