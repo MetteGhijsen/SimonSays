@@ -12,27 +12,24 @@ let scorePlayer = document.getElementById('winsplayer');
 
 function startRound(){
     console.log("start round");
-    generatedSequence = [];
+    generatedSequence = generateSequence(currentLevel);
+
+    playerSequence = [];
+    showSequence();
 }
 
-function PlayGame() {
-    if (currentLevel === 1) {
-        GenerateSequence();
-        ShowSequence();
-        console.log("playgame aangeroepen");
-    }
-}
-
-function GenerateSequence() {
+function generateSequence(amount) {
     console.log("generatesequence aangeroepen");
-    for (let i = 0; i < maxLevel; i++) {
-        generatedSequence[i] = Math.floor(Math.random() * 4);
+    const sequence = [];
+    for (let i = 0; i < amount; i++) {
+        sequence.push(Math.floor(Math.random() * 4));
     }
+    return sequence;
 }
 
-function ShowSequence() {
+function showSequence() {
     console.log("showsequence aangeroepen");
-    for (let i = 0; i < currentLevel; i++) {
+    for (let i = 0; i < generatedSequence.length; i++) {
         buttonRed.style.opacity = "";
         buttonYellow.style.opacity = "";
         buttonGreen.style.opacity = "";
@@ -79,56 +76,64 @@ function playSound(hok){
             playNote(415, 500);
             break;
         case buttonBlue:
-            playNote(209, 500);;
+            playNote(209, 500);
             break;
     }
 }
 
 function Choice(color) {
     console.log("choice aangeroepen");
-    for (let i = 0; i < currentLevel; i++) {
-        switch (color) {
-            case 0:
-                playSound(buttonRed);
-                playerSequence[i] = 0;
-                compareSequence(i);
-                break;
-            case 1:
-                playSound(buttonYellow);
-                playerSequence[i] = 1;
-                compareSequence(i);
-                break;
-            case 2:
-                playSound(buttonGreen);
-                playerSequence[i] = 2;
-                compareSequence(i);
-                break;
-            case 3:
-                playSound(buttonBlue);
-                playerSequence[i] = 3;
-                compareSequence(i);
-                break;
-        }
-    }
-}
-
-function compareSequence(i){
-    setTimeout(function (){
-        if (generatedSequence[i] === playerSequence[i]) {
-            GoodAnswer();
+    playerSequence.push(color);
+    if(playerSequence.length === generatedSequence.length){
+        console.log(playerSequence,generatedSequence);
+        if(arraysEqual(playerSequence,generatedSequence)){
+            goodAnswer();
         }
         else{
-            WrongAnswer();
+            wrongAnswer();
         }
-    },1000);
+    }
+    switch (color){
+        case 0:
+            playSound(buttonRed);
+            break;
+        case 1:
+            playSound(buttonYellow);
+            break;
+        case 2:
+            playSound(buttonGreen);
+            break;
+        case 3:
+            playSound(buttonBlue);
+            break;
+    }
+    // for (let i = 0; i < currentLevel; i++) {
+    //     switch (color) {
+    //         case 0:
+    //             playSound(buttonRed);
+    //             playerSequence[i] = 0;
+    //             compareSequence(i);
+    //             break;
+    //         case 1:
+    //             playSound(buttonYellow);
+    //             playerSequence[i] = 1;
+    //             compareSequence(i);
+    //             break;
+    //         case 2:
+    //             playSound(buttonGreen);
+    //             playerSequence[i] = 2;
+    //             compareSequence(i);
+    //             break;
+    //         case 3:
+    //             playSound(buttonBlue);
+    //             playerSequence[i] = 3;
+    //             compareSequence(i);
+    //             break;
+    //     }
+    // }
 }
 
-function clearPlayerSequence(){
-    console.log("clearplayersequence aangeroepen");
-    playerSequence = [];
-}
-
-function GoodAnswer() {
+function goodAnswer() {
     console.log("goodanswer");
     BlinkingLights(1);
     playNote(100, 500);
@@ -141,12 +146,12 @@ function GoodAnswer() {
         difficulty -= 50;
 
         setTimeout(function (){
-            ShowSequence();
+            startRound();
         },1500);
     }
 }
 
-function WrongAnswer() {
+function wrongAnswer() {
     console.log("wronganswer aangeroepen");
     BlinkingLights(3);
     playNote(100, 500);
@@ -157,7 +162,7 @@ function ResetScore(){
     console.log("resetscore aangeroepen");
     currentLevel = 1;
     difficulty = 1000;
-    clearPlayerSequence();
+    playerSequence = [];
 }
 
 function BlinkingLights(frequency) {
@@ -176,6 +181,22 @@ function BlinkingLights(frequency) {
             }, 900);
         },1000*i);
     }
+}
+
+function arraysEqual(a, b) { //niet zelfgeschreven
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    // Please note that calling sort on an array will modify that array.
+    // you might want to clone your array first.
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
 }
 
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)(); //functie van stackoverflow, NIET zelfgeschreven

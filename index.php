@@ -17,7 +17,7 @@
     </div>
 
     <div class="buttonStartArea">
-        <input onclick="PlayGame()" type="submit" id="buttonStart" class="buttonStart" value="START">
+        <input onclick="startRound()" type="submit" id="buttonStart" class="buttonStart" value="START">
     </div>
 
     <div class="container">
