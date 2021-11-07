@@ -1,6 +1,7 @@
 const maxLevel = 100;
 let currentLevel = 1;
 let difficulty = 1000;
+let playerSequencePosition = 0;
 let generatedSequence = [];
 let playerSequence = [];
 
@@ -10,20 +11,29 @@ let buttonGreen = document.getElementById('buttonGreen');
 let buttonBlue = document.getElementById('buttonBlue');
 let scorePlayer = document.getElementById('winsplayer');
 
-function startRound(){
+function startRound() {
     console.log("start round");
-    generatedSequence = generateSequence(currentLevel);
+    console.log(generatedSequence);
+    //generatedSequence = generateSequence(currentLevel);
 
+    generatedSequence = apendToSequence(generatedSequence);
+    console.log(generatedSequence);
     playerSequence = [];
     showSequence();
 }
 
-function generateSequence(amount) {
-    console.log("generatesequence aangeroepen");
-    const sequence = [];
-    for (let i = 0; i < amount; i++) {
-        sequence.push(Math.floor(Math.random() * 4));
-    }
+// function generateSequence(amount) {
+//     console.log("generatesequence aangeroepen");
+//     const sequence = [];
+//     for (let i = 0; i < amount; i++) {
+//         sequence.push(Math.floor(Math.random() * 4));
+//     }
+//     return sequence;
+// }
+
+function apendToSequence(sequence) {
+    console.log(generatedSequence);
+    sequence.push(Math.floor(Math.random() * 4));
     return sequence;
 }
 
@@ -34,7 +44,7 @@ function showSequence() {
         buttonYellow.style.opacity = "";
         buttonGreen.style.opacity = "";
         buttonBlue.style.opacity = "";
-        setTimeout(function (){
+        setTimeout(function () {
             switch (generatedSequence[i]) {
                 case 0: //rood
                     flashTile(buttonRed);
@@ -53,19 +63,19 @@ function showSequence() {
                     playSound(buttonBlue);
                     break;
             }
-        },difficulty*i);
+        }, difficulty * i);
     }
 }
 
-function flashTile(tile){
+function flashTile(tile) {
     tile.style.opacity = "100%";
-    setTimeout(function (){
+    setTimeout(function () {
         tile.style.opacity = "";
-    },difficulty)
+    }, difficulty)
 }
 
-function playSound(hok){
-    switch(hok){
+function playSound(tile) {
+    switch (tile) {
         case buttonRed:
             playNote(310, 500);
             break;
@@ -84,16 +94,19 @@ function playSound(hok){
 function Choice(color) {
     console.log("choice aangeroepen");
     playerSequence.push(color);
-    if(playerSequence.length === generatedSequence.length){
-        console.log(playerSequence,generatedSequence);
-        if(arraysEqual(playerSequence,generatedSequence)){
-            goodAnswer();
-        }
-        else{
+    console.log(playerSequence, generatedSequence);
+
+        if (playerSequence[playerSequencePosition] === generatedSequence[playerSequencePosition]) {
+                playerSequencePosition++;
+                if(arraysEqual(playerSequence,generatedSequence)){
+                    console.log(playerSequencePosition);
+                    goodAnswer();
+                }
+        } else {
             wrongAnswer();
         }
-    }
-    switch (color){
+
+    switch (color) { //alleen voor de soundeffects
         case 0:
             playSound(buttonRed);
             break;
@@ -136,18 +149,16 @@ function Choice(color) {
 function goodAnswer() {
     console.log("goodanswer");
     BlinkingLights(1);
-    playNote(100, 500);
-    playNote(200, 500);
-    playNote(300, 500);
 
     if (currentLevel < maxLevel) {
         currentLevel++;
         scorePlayer.innerHTML = currentLevel;
+        playerSequencePosition = 0;
         difficulty -= 50;
 
-        setTimeout(function (){
+        setTimeout(function () {
             startRound();
-        },1500);
+        }, 1500);
     }
 }
 
@@ -158,16 +169,19 @@ function wrongAnswer() {
     ResetScore();
 }
 
-function ResetScore(){
+function ResetScore() {
     console.log("resetscore aangeroepen");
     currentLevel = 1;
+    scorePlayer.innerHTML = currentLevel;
+
+    playerSequencePosition = 0;
     difficulty = 1000;
     playerSequence = [];
 }
 
 function BlinkingLights(frequency) {
-    for (let i=0; i < frequency; i++) {
-        setTimeout(function (){
+    for (let i = 0; i < frequency; i++) {
+        setTimeout(function () {
             buttonRed.style.opacity = "100%";
             buttonYellow.style.opacity = "100%";
             buttonGreen.style.opacity = "75%";
@@ -179,11 +193,11 @@ function BlinkingLights(frequency) {
                 buttonGreen.style.opacity = "";
                 buttonBlue.style.opacity = "";
             }, 900);
-        },1000*i);
+        }, 1000 * i);
     }
 }
 
-function arraysEqual(a, b) { //niet zelfgeschreven
+function arraysEqual(a, b) { //NIET zelfgeschreven
     if (a === b) return true;
     if (a == null || b == null) return false;
     if (a.length !== b.length) return false;
@@ -193,7 +207,7 @@ function arraysEqual(a, b) { //niet zelfgeschreven
     // Please note that calling sort on an array will modify that array.
     // you might want to clone your array first.
 
-    for (var i = 0; i < a.length; ++i) {
+    for (let i = 0; i < a.length; ++i) {
         if (a[i] !== b[i]) return false;
     }
     return true;
