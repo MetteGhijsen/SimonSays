@@ -2,35 +2,34 @@ const maxLevel = 100;
 let currentLevel = 1;
 let difficulty = 1000;
 let playerSequencePosition = 0;
-let highScore = 0;
+let highScoreUnit = 1;
 let generatedSequence = [];
 let playerSequence = [];
 
+
+let startScreen = document.getElementById('startScreen');
+let playScreen = document.getElementById('playScreen');
+let endScreen = document.getElementById('endScreen')
 let buttonRed = document.getElementById('buttonRed');
 let buttonYellow = document.getElementById('buttonYellow');
 let buttonGreen = document.getElementById('buttonGreen');
 let buttonBlue = document.getElementById('buttonBlue');
 let scorePlayer = document.getElementById('winsplayer');
+let highScore = document.getElementById('highscore');
 
 function startRound() {
     console.log("start round");
     console.log(generatedSequence);
-    //generatedSequence = generateSequence(currentLevel);
+
+    startScreen.style.display = "none";
+    playScreen.style.display = "block";
+    endScreen.style.display = "none";
 
     generatedSequence = apendToSequence(generatedSequence);
     console.log(generatedSequence);
     playerSequence = [];
     showSequence();
 }
-
-// function generateSequence(amount) {
-//     console.log("generatesequence aangeroepen");
-//     const sequence = [];
-//     for (let i = 0; i < amount; i++) {
-//         sequence.push(Math.floor(Math.random() * 4));
-//     }
-//     return sequence;
-// }
 
 function apendToSequence(sequence) {
     console.log(generatedSequence);
@@ -97,15 +96,15 @@ function Choice(color) {
     playerSequence.push(color);
     console.log(playerSequence, generatedSequence);
 
-        if (playerSequence[playerSequencePosition] === generatedSequence[playerSequencePosition]) {
-                playerSequencePosition++;
-                if(arraysEqual(playerSequence,generatedSequence)){
-                    console.log(playerSequencePosition);
-                    goodAnswer();
-                }
-        } else {
-            wrongAnswer();
+    if (playerSequence[playerSequencePosition] === generatedSequence[playerSequencePosition]) {
+        playerSequencePosition++;
+        if (arraysEqual(playerSequence, generatedSequence)) {
+            console.log(playerSequencePosition);
+            goodAnswer();
         }
+    } else {
+        wrongAnswer();
+    }
 
     switch (color) { //alleen voor de soundeffects
         case 0:
@@ -121,30 +120,6 @@ function Choice(color) {
             playSound(buttonBlue);
             break;
     }
-    // for (let i = 0; i < currentLevel; i++) {
-    //     switch (color) {
-    //         case 0:
-    //             playSound(buttonRed);
-    //             playerSequence[i] = 0;
-    //             compareSequence(i);
-    //             break;
-    //         case 1:
-    //             playSound(buttonYellow);
-    //             playerSequence[i] = 1;
-    //             compareSequence(i);
-    //             break;
-    //         case 2:
-    //             playSound(buttonGreen);
-    //             playerSequence[i] = 2;
-    //             compareSequence(i);
-    //             break;
-    //         case 3:
-    //             playSound(buttonBlue);
-    //             playerSequence[i] = 3;
-    //             compareSequence(i);
-    //             break;
-    //     }
-    // }
 }
 
 function goodAnswer() {
@@ -153,7 +128,11 @@ function goodAnswer() {
 
     if (currentLevel < maxLevel) {
         currentLevel++;
-        scorePlayer.innerHTML = currentLevel;
+        if(currentLevel > highScoreUnit){
+            highScore.innerHTML = "HIGHSCORE: " + currentLevel;
+        }
+
+        scorePlayer.innerHTML = "SCORE: " + currentLevel;
         playerSequencePosition = 0;
         difficulty -= 50;
 
@@ -165,8 +144,14 @@ function goodAnswer() {
 
 function wrongAnswer() {
     console.log("wronganswer aangeroepen");
-    if(highScore<currentLevel){
-        highScore = currentLevel;
+
+    endScreen.style.display = "block";
+    playScreen.style.display = "none";
+
+    if (highScoreUnit < currentLevel) {
+        highScoreUnit = currentLevel;
+        highScore = highScoreUnit;
+        highScore.innerHTML = "HIGHSCORE: " + highScoreUnit;
     }
     BlinkingLights(3);
     playNote(100, 500);
@@ -176,11 +161,44 @@ function wrongAnswer() {
 function ResetScore() {
     console.log("resetscore aangeroepen");
     currentLevel = 1;
-    scorePlayer.innerHTML = currentLevel;
+    scorePlayer.innerHTML = "SCORE: " + currentLevel;
 
     playerSequencePosition = 0;
     difficulty = 1000;
     playerSequence = [];
+    generatedSequence = [];
+}
+
+let namePlayer = document.getElementById('textbox');
+let scoreList = document.getElementById('scoreList');
+
+let gameResult = {};
+
+function AddScore() {
+    let playerName = namePlayer.value;
+
+    if(localStorage.getItem(playerName) === null || highScoreUnit > localStorage.getItem(playerName)) {
+        localStorage.setItem(playerName, highScoreUnit);
+    }
+
+    let keys = Object.keys(localStorage);
+
+    let highScores = [];
+    for (let i = 0; i < keys.length; i++) {
+        let playerName = keys[i];
+        let playerScore = localStorage.getItem(keys[i]);
+
+        highScores.push({playerName,playerScore});
+    }
+
+    highScores.sort((a, b) => parseFloat(b.playerScore) - parseFloat(a.playerScore)); //niet zelf geschreven
+
+    for(let i = 0; i < highScores.length; i++){
+        const newLi = document.createElement("li");
+        const newContent = document.createTextNode(highScores[i].playerName +  ": "+ highScores[i].playerScore);
+        newLi.appendChild(newContent);
+        scoreList.append(newLi);
+    }
 }
 
 function BlinkingLights(frequency) {
@@ -232,4 +250,3 @@ function playNote(frequency, duration) {
             oscillator.stop();
         }, duration);
 }
-

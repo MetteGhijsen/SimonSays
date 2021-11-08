@@ -8,58 +8,64 @@
     src: url(montserrat/Montserrat-Bold.otf) format("truetype");
 }
 
+html{
+    zoom: 50%;
+}
+
+.container-startScreen{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
 body{
     background-color: #3b3b3b;
     padding: 0;
 }
 
-score{
+.areaScore{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.areaScore p{
+    font-family: Montserrat-Bold;
+    font-size: 50px;
+    color: white;
+    text-shadow: 5px 5px black;
+}
+
+.simonsayslogo img{
     display: flex;
     justify-content: center;
-}
-
-.score h1{
-    font-family: Montserrat-Bold;
-    display: flex;
-    font-size: 50px;
-    color: white;
-    text-shadow: 5px 5px black;
-}
-
-.score p{
-    font-family: Montserrat-Regular;
-    display: flex;
-    color: white;
-    font-size: 50px;
-    margin-top: -40px;
-    text-shadow: 5px 5px black;
-}
-
-.scoreplayer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2%;
+    height: 200px;
+    width: auto;
+    margin-top: 5%;
 }
 
 .buttonStart{
     font-family: Montserrat-Bold;
     background-color: #666666;
     color: white;
-    border-radius: 10px;
-    height: 100px;
-    width: 500px;
-    font-size: 50px;
+    border-radius: 40px;
+    height: 200px;
+    width: 1000px;
+    font-size: 100px;
     transition: all .5s ease;
     border: none;
-    text-shadow: 5px 5px black;
+    text-shadow: 10px 10px black;
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .buttonStart:hover{
     background-color: #8c8c8c;
-    box-shadow: 10px 10px black;
+    box-shadow: 20px 20px black;
 }
 
 .buttonStartArea{
@@ -76,14 +82,17 @@ score{
 
 .grid-container {
     display: grid;
-    grid-template-columns: 300px 300px;
-    grid-template-rows: 300px 300px;
+    grid-template-columns: 500px 500px;
+    grid-template-rows: 200px 500px 500px;
     gap: 0px 0px;
     grid-auto-flow: row;
     grid-template-areas:
+    "areaScore areaScore"
     "areaRed areaYellow"
     "areaGreen areaBlue";
 }
+
+.areaScore { grid-area: areaScore}
 
 .areaRed { grid-area: areaRed;}
 
@@ -117,8 +126,8 @@ score{
     background: linear-gradient(60deg, #ff0000, #dd0000);
     border-radius: 20px;
     border: none;
-    height: 300px;
-    width: 300px;
+    height: 500px;
+    width: 500px;
     opacity: 40%;
     transition: 0.2s ease;
 }
@@ -131,8 +140,8 @@ score{
     background: linear-gradient(60deg, #ffff00, #dddd00);
     border-radius: 20px;
     border: none;
-    height: 300px;
-    width: 300px;
+    height: 500px;
+    width: 500px;
     opacity: 20%;
     transition: 0.2s ease;
 }
@@ -145,8 +154,8 @@ score{
     background: linear-gradient(60deg, #00ff00, #00dd00);
     border-radius: 20px;
     border: none;
-    height: 300px;
-    width: 300px;
+    height: 500px;
+    width: 500px;
     opacity: 20%;
     transition: 0.2s ease;
 }
@@ -159,12 +168,60 @@ score{
     background: linear-gradient(60deg, #0000ff, #0000dd);
     border-radius: 20px;
     border: none;
-    height: 300px;
-    width: 300px;
+    height: 500px;
+    width: 500px;
     opacity: 20%;
     transition: 0.2s ease;
 }
 
 .buttonBlue:hover{
     opacity: 100%;
+}
+
+.textbox{
+    width: 800px;
+    height: auto;
+    font-size: 80px;
+    border-radius: 50px;
+}
+
+ul li{
+    font-family: Montserrat-Regular;
+    font-size: 80px;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    color: white;
+}
+
+.textboxenknop{
+    display: flex;
+}
+
+.todolist{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 591px;
+    padding: 0;
+}
+
+.alles{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todolistje{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100%;
+}
+
+.class highscorebutton{
+    border-radius: 30px;
+    background-color: deeppink;
+    color: white;
+    font-size: 20px;
 }

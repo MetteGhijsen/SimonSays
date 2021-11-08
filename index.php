@@ -10,18 +10,22 @@
 </head>
 <body>
 
-<div class="score">
-    <div class="scoreplayer">
-        <h1>SCORE</h1>
-        <p id="winsplayer">1</p>
+<section id="startScreen">
+    <div class="container-startScreen">
+        <img src="img/simonsayslogo.png" alt="simonsayslogo">
+        <div class="buttonStartArea">
+            <input onclick="startRound()" type="submit" id="buttonStart" class="buttonStart" value="START">
+        </div>
     </div>
+</section>
 
-    <div class="buttonStartArea">
-        <input onclick="startRound()" type="submit" id="buttonStart" class="buttonStart" value="START">
-    </div>
-
+<section id="playScreen" style="display: none">
     <div class="container">
         <div class="grid-container">
+                <div class="areaScore">
+                    <p id="winsplayer" class="winsplayer">SCORE: 1</p>
+                    <p id="highscore" class="highscore">HIGHSCORE: 1</p>
+                </div>
             <div class="areaRed">
                 <input onclick="Choice(0)" type="submit" id="buttonRed" class="buttonRed" value="">
             </div>
@@ -36,7 +40,22 @@
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<section id="endScreen" style="display: none;">
+    <div class="alles">
+        <div class="textboxenknop">
+            <input type="text" id="textbox" class="textbox"><br>
+            <input onclick="AddScore()" type="submit" id="button" class="" value="Add your score to the list!">
+        </div>
+        <br>
+        <div class="todolistje">
+            <ul id="scoreList" class="todolist">
+            </ul>
+        </div>
+    </div>
+</section>
+
 </body>
 <script src="script.js"></script>
 </html>
