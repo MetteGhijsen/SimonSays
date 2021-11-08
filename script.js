@@ -2,6 +2,7 @@ const maxLevel = 100;
 let currentLevel = 1;
 let difficulty = 1000;
 let playerSequencePosition = 0;
+let highScore = 0;
 let generatedSequence = [];
 let playerSequence = [];
 
@@ -40,25 +41,25 @@ function apendToSequence(sequence) {
 function showSequence() {
     console.log("showsequence aangeroepen");
     for (let i = 0; i < generatedSequence.length; i++) {
-        buttonRed.style.opacity = "";
-        buttonYellow.style.opacity = "";
-        buttonGreen.style.opacity = "";
-        buttonBlue.style.opacity = "";
         setTimeout(function () {
             switch (generatedSequence[i]) {
                 case 0: //rood
+                    buttonRed.style.opacity = "";
                     flashTile(buttonRed);
                     playSound(buttonRed);
                     break;
                 case 1: //geel
+                    buttonYellow.style.opacity = "";
                     flashTile(buttonYellow);
                     playSound(buttonYellow);
                     break;
                 case 2: //groen
+                    buttonGreen.style.opacity = "";
                     flashTile(buttonGreen);
                     playSound(buttonGreen);
                     break;
                 case 3: //blauw
+                    buttonBlue.style.opacity = "";
                     flashTile(buttonBlue);
                     playSound(buttonBlue);
                     break;
@@ -71,7 +72,7 @@ function flashTile(tile) {
     tile.style.opacity = "100%";
     setTimeout(function () {
         tile.style.opacity = "";
-    }, difficulty)
+    }, 500)
 }
 
 function playSound(tile) {
@@ -164,6 +165,9 @@ function goodAnswer() {
 
 function wrongAnswer() {
     console.log("wronganswer aangeroepen");
+    if(highScore<currentLevel){
+        highScore = currentLevel;
+    }
     BlinkingLights(3);
     playNote(100, 500);
     ResetScore();
