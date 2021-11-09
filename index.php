@@ -46,7 +46,7 @@
     <div class="alles">
         <div class="textboxenknop">
             <input type="text" id="textbox" class="textbox"><br>
-            <input onclick="AddScore()" type="submit" id="button" class="" value="Add your score to the list!">
+            <input onclick="AddScore()" type="submit" id="button" class="highscorebutton" value="ADD YOUR SCORE TO THE LIST!">
         </div>
         <br>
         <div class="todolistje">
