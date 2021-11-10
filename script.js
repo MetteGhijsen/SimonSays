@@ -18,27 +18,21 @@ let scorePlayer = document.getElementById('winsplayer');
 let highScore = document.getElementById('highscore');
 
 function startRound() {
-    console.log("start round");
-    console.log(generatedSequence);
-
     startScreen.style.display = "none";
     playScreen.style.display = "block";
     endScreen.style.display = "none";
 
     generatedSequence = apendToSequence(generatedSequence);
-    console.log(generatedSequence);
     playerSequence = [];
     showSequence();
 }
 
 function apendToSequence(sequence) {
-    console.log(generatedSequence);
     sequence.push(Math.floor(Math.random() * 4));
     return sequence;
 }
 
 function showSequence() {
-    console.log("showsequence aangeroepen");
     for (let i = 0; i < generatedSequence.length; i++) {
         setTimeout(function () {
             switch (generatedSequence[i]) {
@@ -71,7 +65,7 @@ function flashTile(tile) {
     tile.style.opacity = "100%";
     setTimeout(function () {
         tile.style.opacity = "";
-    }, 500)
+    }, 300)
 }
 
 function playSound(tile) {
@@ -92,14 +86,11 @@ function playSound(tile) {
 }
 
 function Choice(color) {
-    console.log("choice aangeroepen");
     playerSequence.push(color);
-    console.log(playerSequence, generatedSequence);
 
     if (playerSequence[playerSequencePosition] === generatedSequence[playerSequencePosition]) {
         playerSequencePosition++;
         if (arraysEqual(playerSequence, generatedSequence)) {
-            console.log(playerSequencePosition);
             goodAnswer();
         }
     } else {
@@ -123,7 +114,6 @@ function Choice(color) {
 }
 
 function goodAnswer() {
-    console.log("goodanswer");
     BlinkingLights(1);
 
     if (currentLevel < maxLevel) {
@@ -143,23 +133,22 @@ function goodAnswer() {
 }
 
 function wrongAnswer() {
-    console.log("wronganswer aangeroepen");
-
-    endScreen.style.display = "block";
-    playScreen.style.display = "none";
-
     if (highScoreUnit < currentLevel) {
         highScoreUnit = currentLevel;
         highScore = highScoreUnit;
         highScore.innerHTML = "HIGHSCORE: " + highScoreUnit;
     }
+
     BlinkingLights(3);
     playNote(100, 500);
     ResetScore();
+    setTimeout(function (){
+        endScreen.style.display = "block";
+        playScreen.style.display = "none";
+    },2000);
 }
 
 function ResetScore() {
-    console.log("resetscore aangeroepen");
     currentLevel = 1;
     scorePlayer.innerHTML = "SCORE: " + currentLevel;
 
@@ -168,6 +157,8 @@ function ResetScore() {
     playerSequence = [];
     generatedSequence = [];
 }
+
+//start code eindscherm
 
 let namePlayer = document.getElementById('textbox');
 let scoreList = document.getElementById('scoreList');
@@ -218,6 +209,8 @@ function BlinkingLights(frequency) {
         }, 1000 * i);
     }
 }
+
+//start niet-zelfgemaakte functies
 
 function arraysEqual(a, b) { //NIET zelfgeschreven
     if (a === b) return true;
